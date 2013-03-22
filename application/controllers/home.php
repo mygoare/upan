@@ -20,9 +20,19 @@ class Home extends CI_controller {
         $file_tmp_name = $_FILES['file']['tmp_name'];
 
         if($file_name && $_FILES['file']['tmp_name']){
-          $upload = move_uploaded_file($file_tmp_name, "./assets/upload_files/".md5($file_name.time()));
+          $file_url = md5($file_name.time())."-".$file_name;
+          $fileInfo = array(
+            "file_name"   => $file_name,
+            "file_url"    => $file_url,
+            "upload_time" => date("Y-m-d H:i:s")
+          );
+
+          $upload = move_uploaded_file($file_tmp_name, "./assets/upload_files/".$file_url);
           if($upload){
-            echo json_encode(array('msg' => $file_name));
+            if ($this->file->insert_file($fileInfo)) {
+              $slug = $this->file->create_slug($file_url);
+              echo json_encode(array('msg' => $file_name, 'slug' => $slug));
+            }
           }else{
             echo json_encode(array('msg' => 'move uploaded file failed'));
           }
@@ -36,6 +46,11 @@ class Home extends CI_controller {
   }
 
   function get_file(){
+    $this->load->model("file");
+
+    $file_code = $this->input->post("input_code");
+    $file_url = $this->file->get_file($file_code);
+    echo json_encode(array('msg' => 'get your file', 'file_url' => $file_url));
   }
 
 }

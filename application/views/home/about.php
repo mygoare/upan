@@ -39,9 +39,9 @@
         <h5>let's enjoy the cloud.</h5>
         <div id="nav">
           <ul>
-            <li><a href="<?php echo base_url(); ?>">Home</a></li>
-            <li><a href="<?php echo base_url(); ?>user">User</a></li>
-            <li><a href="<?php echo base_url(); ?>about">About</a></li>
+            <li><a href="<?php echo base_url(); ?>" title="home">Home</a></li>
+            <li><a href="<?php echo base_url(); ?>user" title="user">User</a></li>
+            <li><a href="<?php echo base_url(); ?>about" title="about">About</a></li>
           </ul>
         </div>
       </div>
@@ -67,7 +67,11 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="http://malsup.github.com/jquery.form.js"></script>
     <script type="text/javascript">
-      var upload_url = '<?php echo site_url('home/upload_file'); ?>';
+      var data = data || {};
+      var data = {
+        upload_url : '<?php echo site_url('home/upload_file'); ?>',
+        url_path_name : window.location.path
+      };
     </script>
     <script src="<?php echo base_url(); ?>assets/js/main.js"></script>
   </body>

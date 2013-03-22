@@ -39,9 +39,9 @@
         <h5>let's enjoy the cloud.</h5>
         <div id="nav">
           <ul>
-            <li><a href="<?php echo base_url(); ?>">Home</a></li>
-            <li><a href="<?php echo base_url(); ?>user">User</a></li>
-            <li><a href="<?php echo base_url(); ?>about">About</a></li>
+            <li><a href="<?php echo base_url(); ?>" title="home">Home</a></li>
+            <li><a href="<?php echo base_url(); ?>user" title="user">User</a></li>
+            <li><a href="<?php echo base_url(); ?>about" title="about">About</a></li>
           </ul>
         </div>
       </div>
@@ -54,13 +54,17 @@
       <div class="eight columns entry_hover entry">
         <h4>Input your code and get your file.</h4>
         <form id="input_code_form">
-          <input id="input_code" placeholder="input your code here..." type="text" value="" />
+          <input id="input_code" name="input_code" placeholder="input your code here..." type="text" value="" />
           <input style="display:none;" type="submit" />
         </form>
       </div>
       <div class="sixteen columns entry" id="file_code">
         <h4>Please remember your code:</h4>
-        <h3>secd</h3>
+        <h3 id="slug"></h3>
+      </div>
+      <div class="sixteen columns entry" id="get_file">
+        <h4>File download starting...</h4>
+        <h6>begin in <span>5</span> seconds <small>If it doesn't start automaticly, please click <a id="file_url" href="">direct link</a></small></h6>
       </div>
       <div class="sixteen columns" id="bottom">
         <p>mygoare &copy; 2013 · <a href="<?php echo base_url(); ?>about" >About</a> · <a href="" >Feedback</a></p>
@@ -69,7 +73,12 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="http://malsup.github.com/jquery.form.js"></script>
     <script type="text/javascript">
-      var upload_url = '<?php echo site_url('home/upload_file'); ?>';
+      var data = data || {};
+      var data = {
+        upload_url    : '<?php echo site_url('home/upload_file'); ?>',
+        get_file_url  : '<?php echo site_url('home/get_file') ?>',
+        url_path_name : window.location.path
+      };
     </script>
     <script src="<?php echo base_url(); ?>assets/js/main.js"></script>
   </body>
