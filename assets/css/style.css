@@ -6,7 +6,7 @@ body {background-color:#f7f7f7;}
 #title a {text-decoration:none;}
 #layout {text-align:center;}
 #upload_file_form a.button {padding:0px; position:relative; cursor:pointer;}
-#upload_file_form a span {position:absolute; line-height:30px; font-size:14px; left:0px; width:220px; text-align:center; cursor:pointer; zoom:-1000;}
+#upload_file_form a span {position:absolute; line-height:30px; font-size:14px; left:0px; width:220px; text-align:center; cursor:pointer;}
 #upload_file_form #upload_file {width:220px; height:30px; cursor:pointer; opacity:0; filter:alpha(opacity=0); font-size:35px; position:relative;} /*use position block level*/
 #upload_file_form, #input_code_form {position:relative;}
 #input_code {display:inline; position:relative; height:20px;}
