@@ -8,7 +8,9 @@ body {background-color:#f7f7f7;}
 #upload_file_form a.button {padding:0px; position:relative; cursor:pointer;}
 #upload_file_form a span {position:absolute; line-height:30px; font-size:14px; left:0px; width:220px; text-align:center; cursor:pointer; zoom:-1000;}
 #upload_file_form #upload_file {width:220px; height:30px; cursor:pointer; opacity:0; filter:alpha(opacity=0); font-size:35px; position:relative;} /*use position block level*/
-#input_code {display:inline; position:relative; top:3px;}
+#upload_file_form, #input_code_form {position:relative;}
+#input_code {display:inline; position:relative; height:20px;}
+.code_notice_box {position:absolute; font-size:10px; top:7px; right:125px; box-shadow:0 0 3px #888; border-radius:2px; padding:0 1px;}
 
 #header {/*padding-bottom:80px;*/ border-bottom:1px solid #e1e1e1; margin-bottom:50px;}
 #header #nav {margin:auto;}
@@ -21,3 +23,10 @@ body {background-color:#f7f7f7;}
 .entry h4 {margin-top:20px;}
 .entry form, #file_code h3 {margin-top:40px; height:50px;}
 #file_code, #get_file {display:none;}
+
+.recommend_browder {text-align:center; display:none; background-color:#FFFFB4; line-height:40px;}
+
+.error {color:#da4f49;}
+.warn {color:#faa732;}
+.notice {color:#5bb75b;}
+.file_upload_error {position:absolute; top:7px; right:-2px; font-size:11px;}

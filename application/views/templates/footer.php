@@ -1,12 +1,14 @@
-    <div id="bottom">
-      <p>mygoare &copy; 2013 · <a href="<?php echo base_url(); ?>about" >About</a> · <a href="" >Feedback</a></p>
     </div>
-    </div>
-  </div>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript">
-var upload_url = '<?php echo site_url('home/upload_file'); ?>';
-</script>
-<script src="<?php echo base_url(); ?>assets/js/main.js"></script>
-</body>
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+    <script src="http://malsup.github.com/jquery.form.js"></script>
+    <script type="text/javascript">
+      var data = data || {};
+      var data = {
+        upload_url    : '<?php echo site_url('home/upload_file'); ?>',
+        get_file_url  : '<?php echo site_url('home/get_file') ?>',
+        url_path_name : window.location.path
+      };
+    </script>
+    <script src="<?php echo base_url(); ?>assets/js/main.js"></script>
+  </body>
 </html>

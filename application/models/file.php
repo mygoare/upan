@@ -41,8 +41,12 @@ class File extends CI_model {
   function get_file($slug)
   {
     $query = $this->db->get_where('file', array('slug' => $slug));
-    $query_row = $query->row_array();
-    $file_url = base_url()."assets/upload_files/".$query_row['file_url'];
-    return $file_url;
+    if ($query->num_rows() == 1) {
+      $query_row = $query->row_array();
+      $file_url = base_url()."assets/upload_files/".$query_row['file_url'];
+      return $file_url;
+    } else {
+      return false;
+    }
   }
 }
