@@ -1,14 +1,17 @@
+      <div class="sixteen columns" id="bottom">
+        <p>mygoare &copy; 2013 · <a href="<?php echo base_url(); ?>about" >关于</a> · <a href="javascript:void(0)" >反馈</a></p>
+      </div>
     </div>
-    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="http://malsup.github.com/jquery.form.js"></script>
     <script type="text/javascript">
       var data = data || {};
       var data = {
-        upload_url    : '<?php echo site_url('home/upload_file'); ?>',
-        get_file_url  : '<?php echo site_url('home/get_file') ?>',
+        base_url      : '<?php echo base_url() ?>',
         url_path_name : window.location.path
       };
     </script>
     <script src="<?php echo base_url(); ?>assets/js/main.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Crimson+Text:400italic' rel='stylesheet' type='text/css'>
   </body>
 </html>

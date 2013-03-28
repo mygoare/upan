@@ -6,6 +6,3 @@
         <p>如果在使用是有什么不便与问题，欢迎给我反馈。</p>
         <p>Email:mygoare#gmail.com</p>
       </div>
-      <div class="sixteen columns" id="bottom">
-        <p>mygoare &copy; 2013 · <a href="<?php echo base_url(); ?>about" >About</a> · <a href="" >Feedback</a></p>
-      </div>

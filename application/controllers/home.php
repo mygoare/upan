@@ -68,4 +68,11 @@ class Home extends CI_controller {
     }
   }
 
+  function create_qr()
+  {
+    $input_code = $this->input->post("slug");
+    $qr_url = "https://chart.googleapis.com/chart?cht=qr&chs=150x150&chl=".$input_code;
+    echo json_encode(array('status' => 1, 'msg' => $qr_url));
+  }
+
 }
