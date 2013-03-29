@@ -29,9 +29,11 @@ class Home extends CI_controller {
           echo json_encode(array('status' => 0, 'msg' => '文件大小请不要超过5M'));
         } else {
           if($file_name && $_FILES['file']['tmp_name']){
-            $file_url = md5($file_name.time())."-".$file_name;
+            $file_url = md5($file_name.time());
             $fileInfo = array(
               "file_name"   => $file_name,
+              "file_size"   => $file_size,
+              "file_type"   => $file_type,
               "file_url"    => $file_url,
               "upload_time" => date("Y-m-d H:i:s")
             );
@@ -65,6 +67,42 @@ class Home extends CI_controller {
       echo json_encode(array('status' => 1, 'msg' => '找到文件了', 'file_url' => $file_url));
     } else {
       echo json_encode(array('status' => 0,  'msg' => '提取码错误'));
+    }
+  }
+
+  function download_file()
+  {
+    $this->load->model('file');
+
+    $file_id = $_GET['id'];
+    $file_name = $_GET['file_name'];
+
+    if ($file_id && $file_name) {
+      $file_something = $this->file->get_file_info($file_id);
+      if (!$file_something) {
+        echo "文件找不到了";
+        exit();
+      }
+      $file_location = $file_something['file_location'];
+      $file_size = $file_something['file_size'];
+      $file_type = $file_something['file_type'];
+
+      if (! file_exists($file_location)) {
+        echo "文件找不到了";
+        exit();
+      } else {
+        $file = fopen($file_location, 'r');
+        Header("Content-type:".$file_type);
+        Header("Accept-Ranges:bytes");
+        Header("Accept-Length:".$file_size);
+        Header("Content-Disposition: attachment; filename=".$file_name);
+
+        echo fread($file, $file_size);
+        fclose($file);
+        exit();
+      }
+    } else {
+      show_404();
     }
   }
 
