@@ -30,7 +30,7 @@ $(function(){
         $('#upload_file').removeAttr('disabled').css({'cursor': 'pointer', 'z-index': 0}).parent().find("span").html('选择文件');
       } else {
         $(".entry_hover").fadeOut(800,function(){
-          $("#file_code").slideDown(1000).find("#slug").html(res.slug).parent().find(".show_slug").attr("data",res.slug);
+          $("#file_code").slideDown(1000).find("#slug").html(res.slug).parent().find(".show_slug").attr({"data": res.slug, "name": res.file_name});
         });
       }
     }
@@ -171,9 +171,12 @@ $(function(){
   $(".create_qr").bind('click',function(){
     $.ajax({
       type     : 'POST',
-      data     : {slug : $(".show_slug").attr("data")},
+      data     : {slug : $(".show_slug").attr("data"), file_name : $(".show_slug").attr("name")},
       dataType : 'json',
       url      : data.base_url+'home/create_qr',
+      beforeSend : function () {
+        $("#slug").html("<span>努力生产二维码...</span>");
+      },
       success  : function (res) {
         $("#slug").html("<img src="+res.msg+">");
       }
@@ -189,6 +192,9 @@ $(function(){
     $("#slug").html(email_slug);
     //email_checker("#email_slug"); slug_send_email();
     $(this).attr("src", data.base_url+"assets/images/send_email_sel.png");
+  });
+  $(".send_phone").click(function(){
+    $(this).attr("src", data.base_url+"assets/images/send_phone_sel.png");
   });
 
   // toggle select list

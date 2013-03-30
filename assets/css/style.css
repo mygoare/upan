@@ -14,7 +14,7 @@ body {background-color:#f7f7f7;}
 
 #header {/*padding-bottom:80px;*/ border-bottom:1px solid #e1e1e1; margin-bottom:50px;}
 #header #nav {margin:auto;}
-#header #nav ul li {float:left;}
+#header #nav ul li {float:left; margin-top:9px;}
 #header #nav ul li a {padding:10px 15px; background-color:#f1f1f1; text-decoration:none; transition:background-color 1s; -webkit-transition:background-color 1s; -moz-transition:background-color 1s; -o-transition:background-color 1s;}
 #header #nav ul li a:hover {background-color:#e9e9e9; box-shadow:0px 3px 0px #d0d0d0;} 
 
@@ -32,6 +32,7 @@ body {background-color:#f7f7f7;}
 .file_upload_error {position:absolute; top:7px; right:-2px; font-size:11px;}
 
 #slug {height:150px; line-height:150px; font-size:28px; font-family:'Crimson Text', serif; margin:8px auto; font-style:italic;}
+#slug span {font-size:13px;}
 #slug img {box-shadow:0 0 10px #ccc;}
 
-.show_slug, .create_qr, .send_email {cursor:pointer;}
+.show_slug, .create_qr, .send_email, .send_phone {cursor:pointer;}

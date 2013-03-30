@@ -42,7 +42,7 @@ class Home extends CI_controller {
             if($upload){
               if ($this->file->insert_file($fileInfo)) {
                 $slug = $this->file->create_slug($file_url);
-                echo json_encode(array('status' => 1,  'msg' => $file_name, 'slug' => $slug));
+                echo json_encode(array('status' => 1,  'msg' => $file_name, 'slug' => $slug, 'file_name' => $file_name));
               }
             }else{
               echo json_encode(array('status'=> 0, 'msg' => 'move uploaded file failed'));
@@ -80,12 +80,15 @@ class Home extends CI_controller {
     if ($file_id && $file_name) {
       $file_something = $this->file->get_file_info($file_id);
       if (!$file_something) {
-        echo "文件找不到了";
-        exit();
+        show_404();
       }
       $file_location = $file_something['file_location'];
       $file_size = $file_something['file_size'];
       $file_type = $file_something['file_type'];
+
+      if ($file_name != $file_something['file_name']) {
+        show_404();
+      }
 
       if (! file_exists($file_location)) {
         echo "文件找不到了";
@@ -109,7 +112,9 @@ class Home extends CI_controller {
   function create_qr()
   {
     $input_code = $this->input->post("slug");
-    $qr_url = "https://chart.googleapis.com/chart?cht=qr&chs=150x150&chl=".$input_code;
+    $file_name = $this->input->post("file_name");
+    $qr_msg = "提取码：".$input_code."，文件名：".$file_name;
+    $qr_url = "https://chart.googleapis.com/chart?cht=qr&chs=150x150&chl=".$qr_msg;
     echo json_encode(array('status' => 1, 'msg' => $qr_url));
   }
 

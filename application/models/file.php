@@ -55,7 +55,7 @@ class File extends CI_model {
     $query = $this->db->get_where('file', array('id' => $id));
     if ($query->num_rows() == 1) {
       $query_row = $query->row_array();
-      $file_something = array("file_size" => $query_row['file_size'], "file_location" => "./assets/upload_files/".$query_row['file_url'], "file_type" => $query_row['file_type']);
+      $file_something = array("file_name" => $query_row['file_name'], "file_size" => $query_row['file_size'], "file_location" => "./assets/upload_files/".$query_row['file_url'], "file_type" => $query_row['file_type']);
       return $file_something ;
     } else {
       return false;
