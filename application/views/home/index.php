@@ -8,8 +8,8 @@
       <div class="eight columns entry_hover entry">
         <h4>输入提取码 & 下载文件</h4>
         <form id="input_code_form">
-          <input id="input_code" name="input_code" placeholder="输入提取码" type="text" />
           <span class="code_notice_box"></span>
+          <input id="input_code" name="input_code" placeholder="输入提取码" type="text" />
           <input style="display:none;" type="submit" />
         </form>
       </div>

@@ -9,8 +9,9 @@ body {background-color:#f7f7f7;}
 #upload_file_form a span {position:absolute; line-height:30px; font-size:14px; left:0px; width:220px; text-align:center; cursor:pointer; height:30px; display:block;}
 #upload_file_form #upload_file {width:220px; height:30px; cursor:pointer; opacity:0; filter:alpha(opacity=0); font-size:35px; position:relative;} /*use position block level*/
 #upload_file_form, #input_code_form {position:relative;}
+#input_code_form {width:220px; margin:40px auto 20px;}
 #input_code {display:inline; position:relative; height:20px;}
-.code_notice_box {position:absolute; font-size:10px; top:7px; right:125px; box-shadow:0 0 3px #888; border-radius:2px; padding:0 1px;}
+.code_notice_box {position:absolute; font-size:10px; top:7px; right:5px; box-shadow:0 0 3px #888; border-radius:2px; padding:0 1px; z-index:100;}
 
 #header {/*padding-bottom:80px;*/ border-bottom:1px solid #e1e1e1; margin-bottom:50px;}
 #header #nav {margin:auto;}
@@ -31,8 +32,10 @@ body {background-color:#f7f7f7;}
 .notice {color:#5bb75b;}
 .file_upload_error {position:absolute; top:7px; right:-2px; font-size:11px;}
 
-#slug {height:150px; line-height:150px; font-size:28px; font-family:'Crimson Text', serif; margin:8px auto; font-style:italic;}
+#slug {height:150px; line-height:150px; font-size:28px; font-family:'Crimson Text', serif; margin:8px auto; font-style:italic; position:relative;}
 #slug span {font-size:13px;}
 #slug img {box-shadow:0 0 10px #ccc;}
 
 .show_slug, .create_qr, .send_email, .send_phone {cursor:pointer;}
+
+.email_re_msg {position:absolute; top:40px; height:40px;}
