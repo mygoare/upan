@@ -118,4 +118,87 @@ class Home extends CI_controller {
     echo json_encode(array('status' => 1, 'msg' => $qr_url));
   }
 
+  // mail模块
+  function send_mail($mail_file, $send_to, $params, $subject)
+  {
+    $mail_url = "http://www.upan.us/mail/".$mail_file."?send_to=".$send_to.$params."&subject=".$subject;
+    $mail_re = file_get_contents($mail_url);
+    return $mail_re;
+  }
+
+  function checkup_email()
+  {
+    $this->load->model('mail');
+
+    $email_addr = $this->input->post("email_addr");
+    if($this->mail->checkup_email($email_addr)){
+      echo json_encode(array("status" => 1, "msg" => "ok"));
+    } else {
+      echo json_encode(array("status" => 0, "msg" => "need send checkup mail"));
+    }
+  }
+
+  function send_checkup_email()
+  {
+    $send_to = $this->input->post("email_addr");
+    $auth_code = substr(md5($send_to), 1, 6);
+    $auth_code_pair = substr(md5($auth_code), 6, 8);
+    $checkup_mail_re = $this->send_mail("checkup_mail.php", $send_to, "&auth_code=".$auth_code, "云U盘邮箱验证");
+    if ($checkup_mail_re == 1) {
+      echo json_encode(array("status" => 1, "auth" => $auth_code_pair, "msg" => "您的邮箱没有通过系统验证。已向您的邮箱发送验证邮件，请填入邮箱中的验证码"));
+    } else {
+      echo json_encode(array("status" => 0, "msg" => "您的邮箱没有通过系统验证。验证邮件发送失败"));
+    }
+  }
+
+  function verify_email()
+  {
+    $this->load->model('mail');
+
+    $auth_code = $this->input->post("auth_code");
+    $auth_code_pair = $this->input->post("auth_pair");
+    $email_addr = $this->input->post("email_addr");
+    $slug_val = $this->input->post("slug_val");
+    $slug_file_name = $this->input->post("slug_file_name");
+
+    if ($auth_code_pair == substr(md5($auth_code), 6, 8)) {
+      $mail_re = $this->send_mail("slug_mail.php", $email_addr, "&slug_val=".$slug_val."&file_name=".$slug_file_name, "您的云U盘文件提取码");
+      $add_mail = $this->mail->add_mail(array('email_addr' => $email_addr, 'confirm_time' => date("Y-m-d H:i:s")));
+      if ($mail_re == 1 && $add_mail == true) {
+        echo json_encode(array("status" => 1, "msg" => "验证通过，提取码已发送到您的邮箱"));
+      } else {
+        echo json_encode(array("status" => 0, "msg" => "邮件发送失败或邮件数据插入失败"));
+      }
+    } else {
+      echo json_encode(array("status" => 0, "msg" => "验证失败"));
+    }
+  }
+
+  function send_slug_mail()
+  {
+    $email_addr = $this->input->post("email_addr");
+    $slug_val = $this->input->post("slug_val");
+    $slug_file_name = $this->input->post("slug_file_name");
+    $mail_re = $this->send_mail("slug_mail.php", $email_addr, "&slug_val=".$slug_val."&file_name=".$slug_file_name, "您的云U盘文件提取码");
+    //return $mail_re;
+    if ($mail_re == 1) {
+      echo json_encode(array("status" => 1, "msg" => "邮件已发送至".$email_addr."，请注意查收"));
+    } else {
+      echo json_encode(array("status" => 0, "msg" => "邮件发送失败"));
+    }
+  }
+
+  // 短信模块
+  function slug_send_mobile()
+  {
+    $mobile_num = $this->input->post("mobile_num");
+    $msg_content = $this->input->post("msg_content");
+
+    $tui3_url = "http://tui3.com/api/send/?k=f1a74c40549254dab8e70dc3f0281f3b&r=json&p=2id&t=".$mobile_num."&c=".$msg_content;
+    $msg_re_content = json_decode(file_get_contents($tui3_url));
+    if ($msg_re_content->{'err_code'} == 0) {
+      echo json_encode(array('status' => 1, 'msg' => "短信发送成功"));
+    }
+  }
+
 }

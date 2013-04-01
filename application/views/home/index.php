@@ -19,8 +19,9 @@
           <img class="show_slug" src="<?php echo base_url() ?>assets/images/slug_sel.png" data="" name="" title="提取码" /><small>提取码</small>
           <img class="create_qr" src="<?php echo base_url() ?>assets/images/qr.png" title="生成二维码" /><small>二维码</small>
           <img class="send_email" src="<?php echo base_url() ?>assets/images/send_email.png" title="发邮件" /><small>发邮件</small>
-          <img class="send_phone" src="<?php echo base_url() ?>assets/images/send_phone.png" title="发短信" /><small>发短信</small>
+          <img class="send_mobile" src="<?php echo base_url() ?>assets/images/send_mobile.png" title="发短信" /><small>发短信</small>
         </div>
+        <!--<p><small>不想记提取码？<a href="">点这里</a>。</small></p>-->
       </div>
       <div class="sixteen columns entry" id="get_file">
         <h4>马上开始下载...</h4>

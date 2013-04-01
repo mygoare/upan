@@ -32,6 +32,9 @@
 
     <link media="screen" rel="stylesheet" href="<?php echo base_url(); ?>assets/css/style.css">
   </head>
+      <!--<div style="width:100%; height:100%; position:absolute; background:#eee; z-index:10; opacity:0.6;filter:alpha(opacity=60);"></div>-->
+      <!--<div class="float_layer" style="position:absolute; width:400px; height:200px; left:50%; margin-left:-200px; background-color:#ccc; top:50%; margin-top:-100px; z-index:1000;">-->
+      <!--</div>-->
   <body>
     <div class="recommend_browder"><p>推荐使用Chrome浏览器，获得更好的用户体验！</p></div>
     <div class="container center">

@@ -1,4 +1,5 @@
 $(function(){
+  String.prototype.trim=function(){return this.replace(/^\s+|\s+$/g, '');};
   // ajax upload file
   $("#upload_file").change(function(){
     var is_file_type = upload_file_checker("upload_file");
@@ -31,6 +32,9 @@ $(function(){
       } else {
         $(".entry_hover").fadeOut(800,function(){
           $("#file_code").slideDown(1000).find("#slug").html(res.slug).parent().find(".show_slug").attr({"data": res.slug, "name": res.file_name});
+          // 定义全局变量
+          slug_val = escape($(".show_slug").attr("data"));
+          slug_file_name = escape($(".show_slug").attr("name"));  // 转义
         });
       }
     }
@@ -183,18 +187,26 @@ $(function(){
     });
     $(this).attr("src", data.base_url+"assets/images/qr_sel.png");
   });
+
   $(".show_slug").click(function(){
     $("#slug").html($(this).attr("data"));
     $(this).attr("src", data.base_url+"assets/images/slug_sel.png");
   });
+
   $(".send_email").click(function(){
-    var email_slug = '<input id="email_slug" style="display:inline;" type="text" name="email" /><button>发送邮件</button>';
+    var email_slug = '<span class="email_re_msg" ></span>'+
+    '<input id="email_addr" style="display:inline;" type="text" name="email" placeholder="请输入邮箱" /><button class="email_button">发送邮件</button>';
     $("#slug").html(email_slug);
-    //email_checker("#email_slug"); slug_send_email();
+    slug_send_email();
     $(this).attr("src", data.base_url+"assets/images/send_email_sel.png");
   });
-  $(".send_phone").click(function(){
-    $(this).attr("src", data.base_url+"assets/images/send_phone_sel.png");
+
+  $(".send_mobile").click(function(){
+    var mobile_slug = '<span class="mobile_re_msg" ></span>'+
+    '<input id="mobile_num" style="display:inline;" type="text" name="mobile" placeholder="请输入手机号" /><button>发送短信</button>';
+    $("#slug").html(mobile_slug);
+    slug_send_mobile();
+    $(this).attr("src", data.base_url+"assets/images/send_mobile_sel.png");
   });
 
   // toggle select list
@@ -210,7 +222,119 @@ $(function(){
   }
   toggle_sel();
 
-  function email_checker (id) {
+  function email_checker (email_addr) {
+    //checkup_email_addr
+    var email_reg = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
+    var flag = true;
+    if (email_reg.test(email_addr) == false) {
+      $(".email_re_msg").text("请填写正确的邮件地址").css("color","#da4f49");
+      flag = false;
+    } else { // if block 执行了，else block则不会执行
+      // 检查emali是否验证过
+      $.ajax({
+        async: false,  // 设置同步 !important
+        type : 'POST',
+        data : {'email_addr' : email_addr},
+        dataType : 'json',
+        url : data.base_url+"home/checkup_email",
+        success : function (res) {
+          if (res.status == 0) {  // 没有通过验证
+            $.post(data.base_url+'home/send_checkup_email', {"email_addr" : email_addr}, function(res){
+              if (res.status == 1) {
+                $(".email_re_msg").text(res.msg).css("color","#da4f49").siblings().hide().parent().append('<input class="verify_input" type="text" style="display:inline;" placeholder="输入验证码" /><button class="email_button">提交验证</button>');;
+                var auth_pair = res.auth;  // 传回的加密后的匹配码
+                $(".verify_input").focus();
+                var mark = false;  // 防止重复提交插入
+                $(".email_button").bind("click",function(){
+                  // verify email
+                  if (mark == true) {
+                    return false;
+                  }
+                  mark = true;
+
+                  var auth_code = $(".verify_input").val();
+                  $.post(data.base_url+"home/verify_email", {"auth_code" : auth_code, "auth_pair" : auth_pair, "email_addr" : email_addr, "slug_val" : slug_val, "slug_file_name" : slug_file_name}, function(res){
+                    if (res.status == 1) {
+                      $(".email_re_msg").text(res.msg).css("color","#5bb75b");
+                    } else {
+                      $(".email_re_msg").text(res.msg).css("color","#da4f49");
+                      mark = false;  // 重置mark为false，可多次验证
+                    }
+                  }, 'json');
+                });
+              } else {
+                $(".email_re_msg").text(res.msg).css("color","#da4f49");
+              }
+            }, 'json');
+            flag = false;
+          }
+        }
+      });
+    }
+    return flag;
+  }
+
+  function slug_send_email () {
+    $(".email_button").click(function () {
+      var send_to = $("#email_addr").val().trim();  // 去除空格
+
+      if (email_checker(send_to) == false) {
+        return false;
+      };
+
+      $.post(data.base_url+"home/send_slug_mail", {"email_addr" : send_to, "slug_val" : slug_val, "slug_file_name" : slug_file_name}, function(res){
+        if (res.status == 1) {
+          $(".email_re_msg").text(res.msg).css("color","#5bb75b");
+        } else {
+          $(".email_re_msg").text(res.msg).css("color","#da4f49");
+        }
+      }, 'json');
+      //var mail_url = "http://www.upan.us/send_mail.php?send_to="+send_to+"&slug_val="+slug_val+"&file_name="+slug_file_name+"&subject=您的云文件提取码&callback=?";
+      //$.ajax({
+        //dataType : 'jsonp',
+        //url : mail_url,
+        //success : function (res) {
+          //if (res.status) {
+            //$(".email_re_msg").text("邮件已发送至 "+$("#email_addr").val()+"，请注意查收").css("color","#5bb75b");
+          //} else {
+          //}
+        //}
+      //});
+    });
+  }
+
+  // 短信模块
+  function mobile_checker (num) {
+    var mobile_num = $(num).val();
+    var mobile_reg = /^(1(([35][0-9])|(47)|[8][0126789]))\d{8}$/;
+    if (mobile_reg.test(mobile_num) == false) {
+      return false;
+    }
+  }
+
+  function slug_send_mobile () {
+    $("#slug > button").click(function () {
+      var is_mobile_num = mobile_checker("#mobile_num");
+      if (is_mobile_num == false) {
+        $(".mobile_re_msg").text("请填写正确的手机号码").css("color","#da4f49");
+        return false;
+      }
+
+      var mobile_num = $("#mobile_num").val();
+      var msg_content = "您在【云U盘】上传的文件名为："+slug_file_name+"，提取码为："+slug_val;
+      var mobile_url = data.base_url + "home/slug_send_mobile";
+      $.ajax({
+        type : 'post',
+        data : {'mobile_num' : mobile_num, 'msg_content' : msg_content},
+        dataType : 'json',
+        url : mobile_url,
+        success : function (res) {
+          if (res.status) {
+            $(".mobile_re_msg").text(res.msg).css("color","#5bb75b");
+          }
+        }
+      });
+    });
   }
 
 });

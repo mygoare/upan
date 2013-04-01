@@ -72,7 +72,7 @@ a {
     <p><span class="but">But</span>您却意外发现了 <a class="bit" href="http://www.bitworkshop.net" target="blank">比特工场(Bitworkshop)</a>，比特工场是民大校内的互联网技术团队，欢迎大家多多关注。</p>
     <p>办公室：大活105 </p>
     <p><wb:follow-button uid="1652092951" type="red_1" width="67" height="24" ></wb:follow-button></p>
-    <p><a href="upan.us">回首页</a></p>
+    <p><a href="<?php echo base_url(); ?>">回首页</a></p>
   </div>
 </body>
 </html>

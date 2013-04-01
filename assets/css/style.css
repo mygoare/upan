@@ -1,5 +1,6 @@
 body {background-color:#f7f7f7;}
 .center {text-align:center;}
+.not_center {text-align:left;}
 .hide {display:none;}
 .one-third h4 {margin-top:30px;}
 #title {margin-top:80px;}
@@ -27,15 +28,15 @@ body {background-color:#f7f7f7;}
 
 .recommend_browder {text-align:center; display:none; background-color:#FFFFB4; line-height:40px;}
 
-.error {color:#da4f49;}
-.warn {color:#faa732;}
 .notice {color:#5bb75b;}
+.warn {color:#faa732;}
+.error {color:#da4f49;}
 .file_upload_error {position:absolute; top:7px; right:-2px; font-size:11px;}
 
 #slug {height:150px; line-height:150px; font-size:28px; font-family:'Crimson Text', serif; margin:8px auto; font-style:italic; position:relative;}
 #slug span {font-size:13px;}
 #slug img {box-shadow:0 0 10px #ccc;}
 
-.show_slug, .create_qr, .send_email, .send_phone {cursor:pointer;}
+.show_slug, .create_qr, .send_email, .send_mobile {cursor:pointer;}
 
-.email_re_msg {position:absolute; top:40px; height:40px;}
+.email_re_msg, .mobile_re_msg {position:absolute; top:100px; height:5px; line-height:20px;}
