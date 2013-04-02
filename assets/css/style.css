@@ -33,10 +33,12 @@ body {background-color:#f7f7f7;}
 .error {color:#da4f49;}
 .file_upload_error {position:absolute; top:7px; right:-2px; font-size:11px;}
 
-#slug {height:150px; line-height:150px; font-size:28px; font-family:'Crimson Text', serif; margin:8px auto; font-style:italic; position:relative;}
-#slug span {font-size:13px;}
+#slug {height:150px; line-height:150px; font-size:28px; font-family:'Crimson Text', serif; margin:8px auto; font-style:italic;/* position:relative;*/}
+#slug span {font-size:13px; font-style:normal;}
 #slug img {box-shadow:0 0 10px #ccc;}
 
 .show_slug, .create_qr, .send_email, .send_mobile {cursor:pointer;}
 
-.email_re_msg, .mobile_re_msg {position:absolute; top:100px; height:5px; line-height:20px;}
+.email_re_msg, .mobile_re_msg {position:absolute; top:100px; line-height:20px;}
+.send-button {#width:66px;}
+.wrap-div {position:relative;width:300px;height:150px;margin:auto;}

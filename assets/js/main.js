@@ -173,16 +173,18 @@ $(function(){
 
   // create qr code
   $(".create_qr").bind('click',function(){
+    $("#slug").html("<span>努力生成二维码...</span>");
     $.ajax({
       type     : 'POST',
-      data     : {slug : $(".show_slug").attr("data"), file_name : $(".show_slug").attr("name")},
+      data     : {"slug" : slug_val, "file_name" : slug_file_name},
       dataType : 'json',
       url      : data.base_url+'home/create_qr',
-      beforeSend : function () {
-        $("#slug").html("<span>努力生产二维码...</span>");
-      },
       success  : function (res) {
-        $("#slug").html("<img src="+res.msg+">");
+        var img = new Image();
+        img.src = res.msg;  // preload the img src
+        img.onload = function(){
+          $("#slug").html("<img src="+res.msg+">");
+        }
       }
     });
     $(this).attr("src", data.base_url+"assets/images/qr_sel.png");
@@ -194,16 +196,14 @@ $(function(){
   });
 
   $(".send_email").click(function(){
-    var email_slug = '<span class="email_re_msg" ></span>'+
-    '<input id="email_addr" style="display:inline;" type="text" name="email" placeholder="请输入邮箱" /><button class="email_button">发送邮件</button>';
+    var email_slug = '<div class="wrap-div"><span class="email_re_msg"></span><input id="email_addr" style="display:inline;" type="text" name="email" placeholder="请输入邮箱" /><input type="button" class="send-button" value="发送邮件"></div>';
     $("#slug").html(email_slug);
     slug_send_email();
     $(this).attr("src", data.base_url+"assets/images/send_email_sel.png");
   });
 
   $(".send_mobile").click(function(){
-    var mobile_slug = '<span class="mobile_re_msg" ></span>'+
-    '<input id="mobile_num" style="display:inline;" type="text" name="mobile" placeholder="请输入手机号" /><button>发送短信</button>';
+    var mobile_slug = '<div class="wrap-div"><span class="mobile_re_msg"></span><input id="mobile_num" style="display:inline;" type="text" name="mobile" placeholder="请输入手机号" /><input type="button" class="send-button" value="发送短信"></div>';
     $("#slug").html(mobile_slug);
     slug_send_mobile();
     $(this).attr("src", data.base_url+"assets/images/send_mobile_sel.png");
@@ -241,11 +241,11 @@ $(function(){
           if (res.status == 0) {  // 没有通过验证
             $.post(data.base_url+'home/send_checkup_email', {"email_addr" : email_addr}, function(res){
               if (res.status == 1) {
-                $(".email_re_msg").text(res.msg).css("color","#da4f49").siblings().hide().parent().append('<input class="verify_input" type="text" style="display:inline;" placeholder="输入验证码" /><button class="email_button">提交验证</button>');;
+                $(".email_re_msg").text(res.msg).css("color","#da4f49").siblings().hide().parent().append('<div class="wrap-div"><input class="verify_input" type="text" style="display:inline;" placeholder="输入验证码" /><input type="button" class="send-button" value="提交验证"></div>');;
                 var auth_pair = res.auth;  // 传回的加密后的匹配码
                 $(".verify_input").focus();
                 var mark = false;  // 防止重复提交插入
-                $(".email_button").bind("click",function(){
+                $(".send-button").bind("click",function(){
                   // verify email
                   if (mark == true) {
                     return false;
@@ -275,7 +275,7 @@ $(function(){
   }
 
   function slug_send_email () {
-    $(".email_button").click(function () {
+    $(".send-button").click(function () {
       var send_to = $("#email_addr").val().trim();  // 去除空格
 
       if (email_checker(send_to) == false) {
@@ -304,33 +304,48 @@ $(function(){
   }
 
   // 短信模块
-  function mobile_checker (num) {
-    var mobile_num = $(num).val();
+  function mobile_checker (mobile_num) {
+    var flag = true;
     var mobile_reg = /^(1(([35][0-9])|(47)|[8][0126789]))\d{8}$/;
     if (mobile_reg.test(mobile_num) == false) {
-      return false;
+      $(".mobile_re_msg").text("请填写正确的手机号码").css("color","#da4f49");
+      flag = false;
+    } else {
+      $.ajax({
+        type : 'POST',
+        async : false,
+        data : {"mobile_num" : mobile_num},
+        dataType : 'json',
+        url : data.base_url+'home/checkup_mobile',
+        success : function (res) {
+          if (res.status == 0) {
+            $(".mobile_re_msg").text("您的手机号未通过系统验证").css("color","#da4f49");
+            flag = false;
+          }
+        }
+      });
     }
+    return flag;
   }
 
   function slug_send_mobile () {
-    $("#slug > button").click(function () {
-      var is_mobile_num = mobile_checker("#mobile_num");
-      if (is_mobile_num == false) {
-        $(".mobile_re_msg").text("请填写正确的手机号码").css("color","#da4f49");
+    $(".send-button").click(function () {
+      var mobile_num = $("#mobile_num").val().trim();
+      if (mobile_checker(mobile_num) == false) {
         return false;
       }
 
-      var mobile_num = $("#mobile_num").val();
-      var msg_content = "您在【云U盘】上传的文件名为："+slug_file_name+"，提取码为："+slug_val;
       var mobile_url = data.base_url + "home/slug_send_mobile";
       $.ajax({
         type : 'post',
-        data : {'mobile_num' : mobile_num, 'msg_content' : msg_content},
+        data : {'mobile_num' : mobile_num, 'slug_val' : slug_val, 'slug_file_name' : slug_file_name},
         dataType : 'json',
         url : mobile_url,
         success : function (res) {
           if (res.status) {
-            $(".mobile_re_msg").text(res.msg).css("color","#5bb75b");
+            $(".mobile_re_msg").text(res.msg).css("color","#5bb75b").parent().find(".send-button").attr("disabled", "true");  // disable button 防刷
+          } else {
+            $(".mobile_re_msg").text(res.msg).css("color","#da4f49");
           }
         }
       });

@@ -121,7 +121,7 @@ class Home extends CI_controller {
   // mail模块
   function send_mail($mail_file, $send_to, $params, $subject)
   {
-    $mail_url = "http://www.upan.us/mail/".$mail_file."?send_to=".$send_to.$params."&subject=".$subject;
+    $mail_url = "http://mail.upan.us/".$mail_file."?send_to=".$send_to.$params."&subject=".$subject;
     $mail_re = file_get_contents($mail_url);
     return $mail_re;
   }
@@ -189,15 +189,31 @@ class Home extends CI_controller {
   }
 
   // 短信模块
+  function checkup_mobile()
+  {
+    $this->load->model('mobile');
+
+    $mobile_num = $this->input->post("mobile_num");
+    if($this->mobile->checkup_mobile($mobile_num)){
+      echo json_encode(array("status" => 1, "msg" => "ok"));
+    } else {
+      echo json_encode(array("status" => 0, "msg" => "not valid"));
+    }
+  }
+
   function slug_send_mobile()
   {
     $mobile_num = $this->input->post("mobile_num");
-    $msg_content = $this->input->post("msg_content");
+    $slug_val = $this->input->post("slug_val");
+    $slug_file_name = $this->input->post("slug_file_name");
+    $msg_content = "您在【云U盘】上传的文件名为：".$slug_file_name."，提取码为：".$slug_val;
 
     $tui3_url = "http://tui3.com/api/send/?k=f1a74c40549254dab8e70dc3f0281f3b&r=json&p=2id&t=".$mobile_num."&c=".$msg_content;
     $msg_re_content = json_decode(file_get_contents($tui3_url));
     if ($msg_re_content->{'err_code'} == 0) {
       echo json_encode(array('status' => 1, 'msg' => "短信发送成功"));
+    } else {
+      echo json_encode(array('status' => 0, 'msg' => "短信发送失败"));
     }
   }
 
