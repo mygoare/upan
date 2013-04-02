@@ -33,8 +33,8 @@ $(function(){
         $(".entry_hover").fadeOut(800,function(){
           $("#file_code").slideDown(1000).find("#slug").html(res.slug).parent().find(".show_slug").attr({"data": res.slug, "name": res.file_name});
           // 定义全局变量
-          slug_val = escape($(".show_slug").attr("data"));
-          slug_file_name = escape($(".show_slug").attr("name"));  // 转义
+          slug_val = escape(res.slug);
+          slug_file_name = encodeURIComponent(res.file_name);  // encodeURIComponent 转义，而不是用 escape， 见evernote
         });
       }
     }
@@ -231,6 +231,7 @@ $(function(){
       flag = false;
     } else { // if block 执行了，else block则不会执行
       // 检查emali是否验证过
+      $(".email_re_msg").text("验证中...").css("color","#5bb75b");;
       $.ajax({
         async: false,  // 设置同步 !important
         type : 'POST',
@@ -241,7 +242,7 @@ $(function(){
           if (res.status == 0) {  // 没有通过验证
             $.post(data.base_url+'home/send_checkup_email', {"email_addr" : email_addr}, function(res){
               if (res.status == 1) {
-                $(".email_re_msg").text(res.msg).css("color","#da4f49").siblings().hide().parent().append('<div class="wrap-div"><input class="verify_input" type="text" style="display:inline;" placeholder="输入验证码" /><input type="button" class="send-button" value="提交验证"></div>');;
+                $(".email_re_msg").text(res.msg).css("color","#da4f49").siblings().hide().parent().append('<input class="verify_input" type="text" style="display:inline;" placeholder="输入验证码" /><input type="button" class="send-button" value="提交验证">');;
                 var auth_pair = res.auth;  // 传回的加密后的匹配码
                 $(".verify_input").focus();
                 var mark = false;  // 防止重复提交插入
@@ -253,6 +254,7 @@ $(function(){
                   mark = true;
 
                   var auth_code = $(".verify_input").val();
+                  $(".email_re_msg").text("提交中...").css("color","#5bb75b");;
                   $.post(data.base_url+"home/verify_email", {"auth_code" : auth_code, "auth_pair" : auth_pair, "email_addr" : email_addr, "slug_val" : slug_val, "slug_file_name" : slug_file_name}, function(res){
                     if (res.status == 1) {
                       $(".email_re_msg").text(res.msg).css("color","#5bb75b");
