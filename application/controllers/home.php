@@ -217,4 +217,8 @@ class Home extends CI_controller {
     }
   }
 
+  function verify_mobile()
+  {
+  }
+
 }

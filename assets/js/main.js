@@ -97,7 +97,7 @@ $(function(){
       }
     }
   }
-  nav_focus("#nav","/upan/");
+  nav_focus("#nav");
 
   // 倒计时
   function count_down (Seconds) {
@@ -338,6 +338,8 @@ $(function(){
       }
 
       var mobile_url = data.base_url + "home/slug_send_mobile";
+      $(".send-button").attr("disabled", "true");  // disable button 点击后防刷
+      $(".email_re_msg").text("发送中...").css("color","#5bb75b");;
       $.ajax({
         type : 'post',
         data : {'mobile_num' : mobile_num, 'slug_val' : slug_val, 'slug_file_name' : slug_file_name},
@@ -345,7 +347,7 @@ $(function(){
         url : mobile_url,
         success : function (res) {
           if (res.status) {
-            $(".mobile_re_msg").text(res.msg).css("color","#5bb75b").parent().find(".send-button").attr("disabled", "true");  // disable button 防刷
+            $(".mobile_re_msg").text(res.msg).css("color","#5bb75b");
           } else {
             $(".mobile_re_msg").text(res.msg).css("color","#da4f49");
           }
