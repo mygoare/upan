@@ -14,7 +14,7 @@ body {background-color:#f7f7f7;}
 #input_code {display:inline; position:relative; height:20px;}
 .code_notice_box {position:absolute; font-size:10px; top:7px; right:5px; box-shadow:0 0 3px #888; border-radius:2px; padding:0 1px; z-index:100;}
 
-#header {/*padding-bottom:80px;*/ border-bottom:1px solid #e1e1e1; margin-bottom:50px;}
+#header {/*padding-bottom:80px;*/ border-bottom:1px solid #e1e1e1; margin-bottom:8px;}
 #header #nav {margin:auto;}
 #header #nav ul li {float:left; margin-top:9px;}
 #header #nav ul li a {padding:10px 15px; background-color:#f1f1f1; text-decoration:none; transition:background-color 1s; -webkit-transition:background-color 1s; -moz-transition:background-color 1s; -o-transition:background-color 1s;}
@@ -34,7 +34,7 @@ body {background-color:#f7f7f7;}
 .file_upload_error {position:absolute; top:7px; right:-2px; font-size:11px;}
 
 #slug {height:150px; line-height:150px; font-size:28px; font-family:'Crimson Text', serif; margin:8px auto; font-style:italic;/* position:relative;*/}
-#slug span {font-size:13px; font-style:normal;}
+#slug span {font-size:12px; font-style:normal;}
 #slug img {box-shadow:0 0 10px #ccc;}
 
 .show_slug, .create_qr, .send_email, .send_mobile {cursor:pointer;}
@@ -42,3 +42,4 @@ body {background-color:#f7f7f7;}
 .email_re_msg, .mobile_re_msg {position:absolute; top:100px; line-height:20px;}
 .send-button {#width:66px;}
 .wrap-div {position:relative;width:300px;height:150px;margin:auto;}
+.toggle-notice {background-color:#ffffe9; margin:auto; font-size:12px; line-height:25px; box-shadow:0px 1px 4px #e3e6eb;}

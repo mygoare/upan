@@ -208,17 +208,40 @@ class Home extends CI_controller {
     $slug_file_name = $this->input->post("slug_file_name");
     $msg_content = "您在【云U盘】上传的文件名为：".$slug_file_name."，提取码为：".$slug_val;
 
+    $this->send_msg($mobile_num, $msg_content);
+  }
+
+  function send_msg($mobile_num, $msg_content)
+  {
     $tui3_url = "http://tui3.com/api/send/?k=f1a74c40549254dab8e70dc3f0281f3b&r=json&p=2id&t=".$mobile_num."&c=".$msg_content;
     $msg_re_content = json_decode(file_get_contents($tui3_url));
     if ($msg_re_content->{'err_code'} == 0) {
       echo json_encode(array('status' => 1, 'msg' => "短信发送成功"));
     } else {
-      echo json_encode(array('status' => 0, 'msg' => "短信发送失败"));
+      echo json_encode(array('status' => 0, 'msg' => "短信发送失败或短信数量已用完"));
     }
   }
 
   function verify_mobile()
   {
+    $this->load->model('mobile');
+
+    $do = $_GET['do'];
+    $mobile_num = $_GET['mobile'];
+    $content = $_GET['content'];
+
+    $is_exists_mobile = $this->mobile->checkup_mobile($mobile_num);
+    if ($do == "sms" && !$is_exists_mobile && $content === "201314") {
+      $add_mobile = $this->mobile->add_mobile(array('mobile_num' => $mobile_num, 'confirm_time' => date("Y-m-d H:i:s")));
+      if ($add_mobile == true) {
+        $msg_content = "您在【云U盘】申请的手机号".$mobile_num."已通过验证，您可以正常使用【云U盘】的短信服务";
+        $this->send_msg($mobile_num, $msg_content);
+      } else {
+        echo json_encode(array("status" => 0, "msg" => "数据库错误"));
+      }
+    } else {
+      echo json_encode(array("status" => 0, "msg" => "手机号已存在或接收码错误"));
+    }
   }
 
 }

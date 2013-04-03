@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta name="description" content="upan,云U盘,享受云的空间,upan.us" >
     <meta name="author" content="mygoare" >
-    <title>云U盘--Let's enjoy the cloud - upan.us</title>
+    <title>云U盘--享受云的空间 - upan.us</title>
 
     <!-- Mobile Specific Metas
     ================================================== -->
@@ -40,7 +40,7 @@
     <div class="container center">
       <div class="sixteen columns" id="header">
         <h1 class="remove-bottom" id="title" title="回首页"><a href="<?php echo base_url(); ?>">Upan.us</a></h1>
-        <h5>让我们享受云的空间！</h5>
+        <h5>云U盘，享受云的空间！</h5>
         <div id="nav">
           <ul>
             <li><a href="<?php echo base_url(); ?>" title="home">首页</a></li>

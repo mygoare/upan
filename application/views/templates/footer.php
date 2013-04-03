@@ -4,8 +4,6 @@
     </div>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="http://malsup.github.com/jquery.form.js"></script>
-    <!--<script src="<?php echo base_url(); ?>assets/js/jquery.min.js"></script>-->
-    <!--<script src="<?php echo base_url(); ?>assets/js/jquery.form.js"></script>-->
     <script type="text/javascript">
       var data = data || {};
       var data = {

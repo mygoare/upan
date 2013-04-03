@@ -14,6 +14,7 @@
         </form>
       </div>
       <div class="sixteen columns entry" id="file_code">
+        <p class="toggle-notice">提取码是区分大小写的</p>
         <div id="slug"></div>
         <div class="toggle_sel">
           <img class="show_slug" src="<?php echo base_url() ?>assets/images/slug_sel.png" data="" name="" title="提取码" /><small>提取码</small>

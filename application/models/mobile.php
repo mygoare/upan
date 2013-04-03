@@ -15,4 +15,10 @@ class Mobile extends CI_model {
       return false;
     }
   }
+
+  function add_mobile($mobile_num)
+  {
+    $this->db->insert('mobile', $mobile_num);
+    return true;
+  }
 }

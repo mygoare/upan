@@ -3,7 +3,7 @@ $(function(){
   // ajax upload file
   $("#upload_file").change(function(){
     var is_file_type = upload_file_checker("upload_file");
-    if (is_file_type  == false) {
+    if (is_file_type  === false) {
       $(".file_upload_error").html(file_type_warning);
       return false;
     }
@@ -26,14 +26,14 @@ $(function(){
       $(".file_upload_error").html("");
     },
     success      : function(res){
-      if (res.status == 0) {
+      if (res.status === 0) {
         $("#upload_file_form > .file_upload_error").html(res.msg);
         $('#upload_file').removeAttr('disabled').css({'cursor': 'pointer', 'z-index': 0}).parent().find("span").html('选择文件');
       } else {
         $(".entry_hover").fadeOut(800,function(){
           $("#file_code").slideDown(1000).find("#slug").html(res.slug).parent().find(".show_slug").attr({"data": res.slug, "name": res.file_name});
           // 定义全局变量
-          slug_val = escape(res.slug);
+          slug_val = res.slug;
           slug_file_name = encodeURIComponent(res.file_name);  // encodeURIComponent 转义，而不是用 escape， 见evernote
         });
       }
@@ -44,7 +44,7 @@ $(function(){
   // get file size
   var file_size_warning = "文件大小请不要超过5M";
   function get_file_size (id) {
-    obj = document.getElementById(id);
+    var obj = document.getElementById(id);
     var obj_value = obj.value;
     if (obj_value == "") {
       return "";
@@ -87,7 +87,7 @@ $(function(){
     // variables
     var nav_path_name = window.location.pathname;
     var nav_a_link = nav.find("a");
-    if(nav_path_name == dir_name){
+    if(nav_path_name === dir_name){
       nav.find("a[title='home']").css({"box-shadow":"0px 3px 0px #d0d0d0"});
     }else{
       for(var i = 0; i < nav_a_link.length; i++){
@@ -171,6 +171,17 @@ $(function(){
     $(".recommend_browder").show();
   }
 
+  var show_slug_notice = "提取码是区分大小写的";
+  var send_email_notice = "若没收到邮件请到\"垃圾箱\"里看一看";
+  var create_qr_notice = "请在扫瞄二维码后务必保存！";
+  var send_mobile_notice = "开通短信功能，请发送短信 201314 到 1069 0133 9400 9395";
+
+  $(".show_slug").click(function(){
+    $("#slug").html($(this).attr("data"));
+    $(this).attr("src", data.base_url+"assets/images/slug_sel.png");
+    $(".toggle-notice").text(show_slug_notice);
+  });
+
   // create qr code
   $(".create_qr").bind('click',function(){
     $("#slug").html("<span>努力生成二维码...</span>");
@@ -188,11 +199,7 @@ $(function(){
       }
     });
     $(this).attr("src", data.base_url+"assets/images/qr_sel.png");
-  });
-
-  $(".show_slug").click(function(){
-    $("#slug").html($(this).attr("data"));
-    $(this).attr("src", data.base_url+"assets/images/slug_sel.png");
+    $(".toggle-notice").text(create_qr_notice);
   });
 
   $(".send_email").click(function(){
@@ -200,6 +207,7 @@ $(function(){
     $("#slug").html(email_slug);
     slug_send_email();
     $(this).attr("src", data.base_url+"assets/images/send_email_sel.png");
+    $(".toggle-notice").text(send_email_notice);
   });
 
   $(".send_mobile").click(function(){
@@ -207,6 +215,7 @@ $(function(){
     $("#slug").html(mobile_slug);
     slug_send_mobile();
     $(this).attr("src", data.base_url+"assets/images/send_mobile_sel.png");
+    $(".toggle-notice").text(send_mobile_notice);
   });
 
   // toggle select list
@@ -339,7 +348,7 @@ $(function(){
 
       var mobile_url = data.base_url + "home/slug_send_mobile";
       $(".send-button").attr("disabled", "true");  // disable button 点击后防刷
-      $(".email_re_msg").text("发送中...").css("color","#5bb75b");;
+      $(".mobile_re_msg").text("发送中...").css("color","#5bb75b");;
       $.ajax({
         type : 'post',
         data : {'mobile_num' : mobile_num, 'slug_val' : slug_val, 'slug_file_name' : slug_file_name},
