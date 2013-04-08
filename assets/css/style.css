@@ -31,7 +31,7 @@ body {background-color:#f7f7f7;}
 .notice {color:#5bb75b;}
 .warn {color:#faa732;}
 .error {color:#da4f49;}
-.file_upload_error {position:absolute; top:7px; right:-2px; font-size:11px;}
+.file_upload_error {position:absolute; top:7px; font-size:11px;}
 
 #slug {height:150px; line-height:150px; font-size:28px; font-family:'Crimson Text', serif; margin:8px auto; font-style:italic;/* position:relative;*/}
 #slug span {font-size:12px; font-style:normal;}

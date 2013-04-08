@@ -23,7 +23,9 @@ $(function(){
     url          : data.base_url+'home/upload_file',
     beforeSubmit : function () {
       $('#upload_file').attr('disabled', "disabled").css({"cursor":"not-allowed", "z-index": -1000}).parent().find("span").html("正在努力上传中...");
-      $(".file_upload_error").html("");
+    },
+    uploadProgress: function (event, position, total, percentComplete) {
+      $(".file_upload_error").html(percentComplete+"%").css("color","#5bb75b");
     },
     success      : function(res){
       if (res.status === 0) {
