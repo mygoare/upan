@@ -17,10 +17,10 @@
         <p class="toggle-notice">提取码是区分大小写的</p>
         <div id="slug"></div>
         <div class="toggle_sel">
-          <img class="show_slug" src="<?php echo base_url() ?>assets/images/slug_sel.png" data="" name="" title="提取码" /><small>提取码</small>
-          <img class="create_qr" src="<?php echo base_url() ?>assets/images/qr.png" title="生成二维码" /><small>二维码</small>
-          <img class="send_email" src="<?php echo base_url() ?>assets/images/send_email.png" title="发邮件" /><small>发邮件</small>
-          <img class="send_mobile" src="<?php echo base_url() ?>assets/images/send_mobile.png" title="发短信" /><small>发短信</small>
+          <img class="show_slug" src="<?php echo base_url() ?>assets/images/slug_sel.png" title="提取码" alt="提取码" /><small>提取码</small>
+          <img class="create_qr" src="<?php echo base_url() ?>assets/images/qr.png" title="生成二维码" alt="生成二维码" /><small>二维码</small>
+          <img class="send_email" src="<?php echo base_url() ?>assets/images/send_email.png" title="发邮件" alt="发邮件" /><small>发邮件</small>
+          <img class="send_mobile" src="<?php echo base_url() ?>assets/images/send_mobile.png" title="发短信" alt="发短信" /><small>发短信</small>
         </div>
         <!--<p><small>不想记提取码？<a href="">点这里</a>。</small></p>-->
       </div>
