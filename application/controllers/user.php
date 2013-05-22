@@ -8,5 +8,12 @@ class User extends CI_controller
     $this->load->view('user/handbook');
     $this->load->view("templates/footer");
   }
+
+  function index()
+  {
+    $this->load->view("templates/header");
+    $this->load->view('user/index');
+    $this->load->view("templates/footer");
+  }
 }
 

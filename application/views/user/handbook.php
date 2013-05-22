@@ -1,5 +1,5 @@
       <div class="sixteen columns entry not_center">
-        <h4>用户手册</h4>
+        <h4>用户手册 -- <small>云U盘如何使用</small></h4>
         <h5>关于云U盘</h5>
         <ol>
           <li><p>云U盘(upan.us)是一种基于互联网的云服务，使用时需要电脑联网。</p></li>

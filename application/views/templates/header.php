@@ -45,6 +45,7 @@
           <ul>
             <li><a href="<?php echo base_url(); ?>" title="home">首页</a></li>
             <li><a href="<?php echo base_url(); ?>about" title="about">关于</a></li>
+            <li><a href="<?php echo base_url(); ?>user" title="user">用户</a></li>
           </ul>
         </div>
       </div>
