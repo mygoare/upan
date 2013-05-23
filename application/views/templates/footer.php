@@ -9,7 +9,8 @@
       var data = data || {};
       var data = {
         base_url      : '<?php echo base_url() ?>',
-        url_path_name : window.location.path
+        url_path_name : window.location.path,
+        file_max      : <?php echo isset($_SESSION["user_login"])?10:5 ?>
       };
     </script>
     <script src="<?php echo base_url(); ?>assets/js/main.js"></script>

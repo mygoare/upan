@@ -10,7 +10,7 @@ $(function(){
 
     var upload_file_size = get_file_size("upload_file");
     //console.log(upload_file_size);
-    if (upload_file_size > 5*1024*1024) {
+    if (upload_file_size > data.file_max*1024*1024) {
       $(".file_upload_error").html(file_size_warning);
       return false;
     }
@@ -44,7 +44,7 @@ $(function(){
   $("#upload_file_form").ajaxForm(upload_file_options).resetForm();
 
   // get file size
-  var file_size_warning = "文件大小请不要超过5M";
+  var file_size_warning = "文件大小请不要超过"+data.file_max+"M";
   function get_file_size (id) {
     var obj = document.getElementById(id);
     var obj_value = obj.value;
@@ -367,4 +367,59 @@ $(function(){
     });
   }
 
+});
+
+$(function(){
+
+  var delay = (function(){
+    var timer = 0;
+    return function(callback, ms){
+      clearTimeout (timer);
+      timer = setTimeout(callback, ms);
+    };
+  })();
+
+  $('#user-login input[name="username"]').bind('keyup', function(){
+    delay(function(){
+      if ($('#user-login input[name="username"]').val() == "") {
+        $('.user-notice-box').addClass('error').text("用户名不得为空");
+        return false;
+      }
+      $.getJSON(data.base_url+"/user/check_username", {
+        "username" : $('#user-login input[name="username"]').val()
+      }, function(res){
+        if (res.status == 0) {
+          $('.user-notice-box').removeClass('notice').addClass('error').text(res.msg);
+        } else {
+          $('.user-notice-box').removeClass('error').addClass('notice').text("ok");
+        }
+      });
+    }, 300);
+  });
+  $('#user-login input[name="pwd"]').bind('keyup', function(){
+    delay(function(){
+      if ($('#user-login input[name="pwd"]').val().length < 6) {
+        $('.pwd-notice-box').removeClass('notice').addClass('error').text("密码少于6位");
+      } else {
+        $('.pwd-notice-box').removeClass('error').addClass('notice').text("ok");
+      }
+    }, 300);
+  });
+
+  var user_login_options = {
+    dataType     : 'json',
+    type         : 'POST',
+    url          : data.base_url+'user/login_in',
+    beforeSubmit : function () {
+    },
+    success      : function (res) {
+      if (res.status) {
+        $('#nav > ul > li > a[title="user"]').text(res.username);
+      } else {
+        $(".user-notice-box").removeClass('notice').addClass('error').text(res.user_msg);
+        $(".pwd-notice-box").removeClass('notice').addClass('error').text(res.pwd_msg);
+      }
+    }
+  };
+  $("#user-login").ajaxForm(user_login_options);
 });
