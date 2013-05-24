@@ -11,9 +11,8 @@ class User extends CI_controller
 
   function index()
   {
-    $session = $this->session->all_userdata();
-    if (!$session['logged_in']) {
-      // code...
+    if (!$this->session->userdata('logged_in')) {
+      redirect('/user/login');
     }
     $this->load->view("templates/header");
     $this->load->view('user/index');
