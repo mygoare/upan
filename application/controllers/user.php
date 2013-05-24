@@ -11,15 +11,24 @@ class User extends CI_controller
 
   function index()
   {
+    $session = $this->session->all_userdata();
+    if (!$session['logged_in']) {
+      // code...
+    }
     $this->load->view("templates/header");
     $this->load->view('user/index');
     $this->load->view("templates/footer");
   }
 
+  function login()
+  {
+    $this->load->view("templates/header");
+    $this->load->view('user/login');
+    $this->load->view("templates/footer");
+  }
+
   function login_in()
   {
-    //$this->load->library('session');
-
     $this->load->model("account");
 
     $user_name = $this->input->post("username");
@@ -45,8 +54,14 @@ class User extends CI_controller
       'user_pwd' => $user_pwd
     );
 
-    $this->account->login_in($userInfo);
-    echo json_encode(array('status' => 1, 'username' => $user_name));
+    if ($this->account->login_in($userInfo)) {
+      $newdata = array(
+        'username' => $user_name,
+        'logged_in'=> true
+      );
+      $this->session->set_userdata($newdata);
+      echo json_encode(array('status' => 1));
+    }
   }
 
   function check_username()

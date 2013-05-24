@@ -15,6 +15,7 @@ class Home extends CI_controller {
 
   function upload_file(){
     $this->load->model("file");
+    $file_max = ($this->session->userdata('logged_in'))?10:5;
 
     if($_FILES['file']){
       if($_FILES['file']['error'] > 0){
@@ -25,8 +26,8 @@ class Home extends CI_controller {
         $file_type = $_FILES['file']['type'];
         $file_size = $_FILES['file']['size'];
 
-        if ($file_size > 5*1024*1024) {
-          echo json_encode(array('status' => 0, 'msg' => '文件大小请不要超过5M'));
+        if ($file_size > $file_max*1024*1024) {
+          echo json_encode(array('status' => 0, 'msg' => '文件大小请不要超过'.$file_max.'M'));
         } else {
           if($file_name && $_FILES['file']['tmp_name']){
             $file_url = md5($file_name.time());

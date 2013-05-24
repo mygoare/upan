@@ -45,7 +45,11 @@
           <ul>
             <li><a href="<?php echo base_url(); ?>" title="home">首页</a></li>
             <li><a href="<?php echo base_url(); ?>about" title="about">关于</a></li>
-            <li><a href="<?php echo base_url(); ?>user" title="user">用户</a></li>
+            <?php if ($this->session->userdata('logged_in')) { ?>
+            <li><a href="<?php echo base_url(); ?>user" title="user"><?php echo $this->session->userdata('username') ?></a></li>
+            <?php } else { ?>
+            <li><a href="<?php echo base_url(); ?>user/login" title="user">用户</a></li>
+            <?php } ?>
           </ul>
         </div>
       </div>

@@ -415,6 +415,7 @@ $(function(){
     success      : function (res) {
       if (res.status) {
         $('#nav > ul > li > a[title="user"]').text(res.username);
+        window.location.href=data.base_url+"user/index";
       } else {
         $(".user-notice-box").removeClass('notice').addClass('error').text(res.user_msg);
         $(".pwd-notice-box").removeClass('notice').addClass('error').text(res.pwd_msg);

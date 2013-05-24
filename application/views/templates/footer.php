@@ -2,7 +2,8 @@
         <p>mygoare &copy; 2013 · <a href="<?php echo base_url(); ?>about" >关于</a> · <a href="<?php echo base_url(); ?>user/handbook">用户手册</a><!-- · <a href="javascript:void(0)" >反馈</a>--></p>
       </div>
     </div>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
+    <script src="<?php echo base_url(); ?>assets/js/jquery.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/jquery.form.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/jquery.cookie.js"></script>
     <script type="text/javascript">
@@ -10,7 +11,7 @@
       var data = {
         base_url      : '<?php echo base_url() ?>',
         url_path_name : window.location.path,
-        file_max      : <?php echo isset($_SESSION["user_login"])?10:5 ?>
+        file_max      : <?php echo ($this->session->userdata('logged_in'))?10:5 ?>
       };
     </script>
     <script src="<?php echo base_url(); ?>assets/js/main.js"></script>
