@@ -371,56 +371,72 @@ $(function(){
 
 $(function(){
 
-  var delay = (function(){
-    var timer = 0;
-    return function(callback, ms){
-      clearTimeout (timer);
-      timer = setTimeout(callback, ms);
-    };
-  })();
+  //var delay = (function(){
+    //var timer = 0;
+    //return function(callback, ms){
+      //clearTimeout (timer);
+      //timer = setTimeout(callback, ms);
+    //};
+  //})();
 
-  $('#user-login input[name="username"]').bind('keyup', function(){
-    delay(function(){
-      if ($('#user-login input[name="username"]').val() == "") {
-        $('.user-notice-box').addClass('error').text("用户名不得为空");
-        return false;
-      }
-      $.getJSON(data.base_url+"/user/check_username", {
-        "username" : $('#user-login input[name="username"]').val()
-      }, function(res){
-        if (res.status == 0) {
-          $('.user-notice-box').removeClass('notice').addClass('error').text(res.msg);
-        } else {
-          $('.user-notice-box').removeClass('error').addClass('notice').text("ok");
-        }
-      });
-    }, 300);
-  });
-  $('#user-login input[name="pwd"]').bind('keyup', function(){
-    delay(function(){
-      if ($('#user-login input[name="pwd"]').val().length < 6) {
-        $('.pwd-notice-box').removeClass('notice').addClass('error').text("密码少于6位");
-      } else {
-        $('.pwd-notice-box').removeClass('error').addClass('notice').text("ok");
-      }
-    }, 300);
-  });
+  //$('#user-login input[name="username"]').bind('keyup', function(){
+    //delay(function(){
+      //if ($('#user-login input[name="username"]').val() == "") {
+        //$('.user-notice-box').addClass('error').text("用户名不得为空");
+        //return false;
+      //}
+      //$.getJSON(data.base_url+"user/check_username", {
+        //"username" : $('#user-login input[name="username"]').val()
+      //}, function(res){
+        //if (res.status == 0) {
+          //$('.user-notice-box').removeClass('notice').addClass('error').text(res.msg);
+        //} else {
+          //$('.user-notice-box').removeClass('error').addClass('notice').text("ok");
+        //}
+      //});
+    //}, 300);
+  //});
+  //$('#user-login input[name="pwd"]').bind('keyup', function(){
+    //delay(function(){
+      //if ($('#user-login input[name="pwd"]').val().length < 6) {
+        //$('.pwd-notice-box').removeClass('notice').addClass('error').text("密码少于6位");
+      //} else {
+        //$('.pwd-notice-box').removeClass('error').addClass('notice').text("ok");
+      //}
+    //}, 300);
+  //});
 
   var user_login_options = {
     dataType     : 'json',
     type         : 'POST',
-    url          : data.base_url+'user/login_in',
+    url          : data.base_url+'user/signIn',
     beforeSubmit : function () {
     },
     success      : function (res) {
       if (res.status) {
-        $('#nav > ul > li > a[title="user"]').text(res.username);
+        $.cookie('username', $('#user-login > input[name="username"]').val(), { expires: 7, path: '/' });
         window.location.href=data.base_url+"user/index";
       } else {
-        $(".user-notice-box").removeClass('notice').addClass('error').text(res.user_msg);
-        $(".pwd-notice-box").removeClass('notice').addClass('error').text(res.pwd_msg);
+        $('.login-notice-box').addClass('error').text(res.msg);
+        $('#user-login > input[name="username"]').focus();
       }
     }
   };
   $("#user-login").ajaxForm(user_login_options);
+
+  //$.getJSON(data.base_url+'user/listUserUpload',
+  //function(rsp){
+    //for (var i=0; i < rsp.length; i++) {
+      //var html = "<tr>"+
+                    //"<td>"+rsp[i].file_name+"</td>"+
+                    //"<td>"+rsp[i].slug+"</td>"+
+                    //"<td>"+rsp[i].upload_time+"</td>"+
+                  //"</tr>"
+    //$("tbody").append(html);
+    //}
+  //});
+});
+
+$(function(){
+  $('#user-login > input[name="username"]').val($.cookie('username')).focus();
 });

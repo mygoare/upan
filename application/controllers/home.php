@@ -17,6 +17,8 @@ class Home extends CI_controller {
     $this->load->model("file");
     $file_max = ($this->session->userdata('logged_in'))?10:5;
 
+    $user_id = $this->session->userdata('userid');
+
     if($_FILES['file']){
       if($_FILES['file']['error'] > 0){
         echo json_encode(array('code' => $_FILES['file']['error'], 'msg' => 'upload failed, error > 0'));
@@ -36,8 +38,12 @@ class Home extends CI_controller {
               "file_size"   => $file_size,
               "file_type"   => $file_type,
               "file_url"    => $file_url,
-              "upload_time" => date("Y-m-d H:i:s")
+              "upload_time" => date("Y-m-d H:i:s"),
+              "owned"       => ''
             );
+            if ($user_id) {
+              $fileInfo['owned'] = $user_id;
+            }
 
             $upload = move_uploaded_file($file_tmp_name, "./assets/upload_files/".$file_url);
             if($upload){

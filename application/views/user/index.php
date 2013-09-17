@@ -1,38 +1,29 @@
 <div class="sixteen columns entry not_center">
-  <h4>用户 -- <small>创建用户</small></h4>
+  <h4>个人中心 -- <small>我的地盘我做主</small></h4>
   <div class="eight columns alpha">
-    <p>上传过的文件：</p>
+  <!--<p><a id="view-uploaded-file" href="javascript:void(0)">查看上传过的文件</a></p>-->
+  <?php if (empty($file_uploaded)) { ?>
+    <p>您还未上传任何文件</p>
+  <?php } else { ?>
     <table style="width:100%;">
       <thead>
         <tr>
           <th>文件名</th>
-          <th>提取码</th>
+          <th style="min-width:45px;">提取码</th>
           <th>上传时间</th>
         </tr>
       </thead>
       <tbody>
+        <?php foreach($file_uploaded as $fileInfo) { ?>
         <tr>
-          <td>sdlkfsldkjfoiwejfsdnfhello.doc</td>
-          <td>23ed</td>
-          <td>2013-04-04 21:48:55</td>
+        <td><a href="<?php echo base_url().'home/download_file?id='.$fileInfo['id'].'&file_name='.$fileInfo['file_name'] ?>"><?php echo $fileInfo['file_name'] ?></a></td>
+        <td><?php echo $fileInfo['slug'] ?></td>
+        <td><?php echo $fileInfo['upload_time'] ?></td>
         </tr>
-        <tr>
-          <td>hello.doc</td>
-          <td>23ed</td>
-          <td>2013-04-04 21:48:55</td>
-        </tr>
-        <tr>
-          <td>hello.doc</td>
-          <td>23ed</td>
-          <td>2013-04-04 21:48:55</td>
-        </tr>
-        <tr>
-          <td>hello.doc</td>
-          <td>23ed</td>
-          <td>2013-04-04 21:48:55</td>
-        </tr>
+        <?php } ?>
       </tbody>
     </table>
+  <?php } ?>
   </div>
   <div class="eight columns omega">
     <ol>

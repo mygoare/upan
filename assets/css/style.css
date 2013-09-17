@@ -43,13 +43,16 @@ body {background-color:#f7f7f7;}
 .email_re_msg, .mobile_re_msg {position:absolute; top:100px; line-height:20px;}
 .send-button {#width:66px;}
 .wrap-div {position:relative;width:300px;height:150px;margin:auto;}
-.toggle-notice {background-color:#ffffe9; margin:auto; font-size:12px; line-height:25px; box-shadow:0px 1px 4px #e3e6eb;}
+.toggle-notice {background-color:#ffffe9; margin:auto; font-size:12px; line-height:25px; box-shadow:0px 1px 4px #e3e6eb; text-align:center;}
 
 #user-login {margin-bottom:0; position:relative;}
-#user-login .notice-box {position:absolute; font-size:11px; left:226px;}
-.user-notice-box {top:26px;}
-.pwd-notice-box {top:95px;}
+#user-login .notice-box {position:absolute; font-size:11px;}
+.user-notice-box {top:26px; left:226px;}
+.pwd-notice-box {top:95px; left:226px;}
+.login-notice-box {left:54px; bottom:26px;}
 table th {font-weight:bold;}
 table tr {line-height:30px; border-bottom:1px solid #ddd;}
 table tbody tr:nth-child(even) {background-color:#f2f2f2;}
 table tbody tr:hover {background-color:#fafafa;}
+
+#view-uploaded-file {text-decoration:none; padding:5px; border:1px dashed #ddd; background-color:#efefef;}
