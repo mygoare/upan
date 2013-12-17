@@ -213,7 +213,7 @@ class Home extends CI_controller {
 
   function send_msg($mobile_num, $msg_content)
   {
-    $tui3_url = "http://tui3.com/api/send/?k=".$tui3_api_key."&r=json&p=2id&t=".$mobile_num."&c=".$msg_content;
+    $tui3_url = "http://tui3.com/api/send/?k=".TUI3_API_KEY."&r=json&p=2id&t=".$mobile_num."&c=".$msg_content;
     $msg_re_content = json_decode(file_get_contents($tui3_url));
     if ($msg_re_content->{'err_code'} == 0) {
       echo json_encode(array('status' => 1, 'msg' => "短信发送成功"));

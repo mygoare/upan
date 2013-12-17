@@ -9,6 +9,8 @@ upan in the cloud
 
 1.  **Database:** `cd application/config` folder, `cp database.php.sample database.php`, fill with your own database name & password
 
-2.  **SMS:** `vim application/config/constants.php`, change `$tui3_api_key` value & fill the vps server ip address at tui3 website
+2.  **SMS:** `vim application/config/constants.php`, change `TUI3_API_KEY` value & fill the vps server ip address at tui3 website
 
 3.  **Mail:** ssh to vps server, `sudo tasksel` install the `mail server`. Make a virtual machine to `/var/www/mail/` folder with `mail.upan.us` domain
+
+4.  `sudo chmod -R o+w assets/upload_files`. Let users can upload files
