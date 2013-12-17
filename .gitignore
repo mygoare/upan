@@ -3,7 +3,7 @@
 */logs/!index.html
 */cache/*
 */cache/!index.html
+
 .DS_Store
-/assets/upload_files
 /application/config/database.php
 /tags
