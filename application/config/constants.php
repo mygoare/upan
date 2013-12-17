@@ -41,4 +41,4 @@ define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 /* Location: ./application/config/constants.php */
 
 //Global Variables defined by self
-defind('TUI3_API_KEY', "f1a74c40549254dab8e70dc3f0281f3b");   // Don't forget to fill with you vps server ip to the tui3 website
+define('TUI3_API_KEY', "f1a74c40549254dab8e70dc3f0281f3b");   // Don't forget to fill with you vps server ip to the tui3 website
