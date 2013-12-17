@@ -5,5 +5,5 @@
 */cache/!index.html
 .DS_Store
 /assets/upload_files
-/application/config/
+/application/config/database.php
 /tags
