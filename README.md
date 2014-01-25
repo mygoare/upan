@@ -11,6 +11,6 @@ upan in the cloud
 
 2.  **SMS:** `vim application/config/constants.php`, change `TUI3_API_KEY` value & fill the vps server ip address at tui3 website
 
-3.  **Mail:** ssh to vps server, `sudo tasksel` install the `mail server`. Make a virtual machine to `/var/www/mail/` folder with `mail.upan.us` domain
+3.  **Mail:** ssh to vps server, `sudo tasksel` install the `mail server`. Make a virtual machine to `/var/www/upanMail/` folder with `mail.upan.us` domain
 
-4.  `sudo chmod -R o+w assets/upload_files`. Let users can upload files
+4.  `sudo chmod -r o+w assets/upload_files`. Let users can upload files
